@@ -5,7 +5,7 @@ import SketchbookToSelectedWorksTransition from './components/SketchbookToSelect
 
 export default function App() {
   return (
-    <div className="relative min-h-screen bg-[#191818] text-white selection:bg-[#afcc0f] selection:text-black flex flex-col items-center">
+    <div className="relative min-h-screen bg-[#191818] text-white selection:bg-[#afcc0f] selection:text-black flex flex-col items-center overflow-x-clip">
       
       {/* Black Hero Section Container (Responsive 1440px centered container) */}
       <div className="relative w-full max-w-[1440px] flex flex-col items-center">
@@ -27,17 +27,26 @@ export default function App() {
         {/* Content Area */}
         <div className="relative z-10 w-full flex flex-col items-center px-4">
           
-          {/* Section 1 (Initial Viewport): Navbar at top, Page 1 ON TOP (z-20) */}
-          <section className="w-full h-screen min-h-[660px] flex flex-col justify-between items-center pt-4 relative z-20">
+          {/* Navbar: Centered at top */}
+          <section className="w-full flex flex-col items-center pt-4 relative z-20">
             <Navbar />
-            <div className="w-full flex justify-center relative z-20">
-              <HeroNotebookPage1 />
-            </div>
           </section>
 
-          {/* Section 2: Page 2 BEHIND Page 1 (z-10) */}
-          <section className="w-full flex justify-center pb-20 relative z-10 -mt-[19px]">
-            <HeroNotebookPage2 />
+          {/* Sketchbook Unit: Page 1 + Page 2 scaled together proportionally as ONE visual unit */}
+          <section id="about" className="w-full flex justify-center relative z-20 mt-[63px] pb-20">
+            <div className="sketchbook-unit">
+              <div className="sketchbook-scaler">
+                {/* Page 1 ON TOP (z-20) */}
+                <div className="relative z-20 flex justify-center w-full">
+                  <HeroNotebookPage1 />
+                </div>
+
+                {/* Page 2 BEHIND Page 1 (z-10, exact -19px overlap) */}
+                <div className="relative z-10 flex justify-center w-full -mt-[19px]">
+                  <HeroNotebookPage2 />
+                </div>
+              </div>
+            </div>
           </section>
 
         </div>

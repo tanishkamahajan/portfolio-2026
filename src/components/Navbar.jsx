@@ -10,16 +10,21 @@ export default function Navbar() {
     setActiveSection(section);
   };
 
+  const handleLogoClick = () => {
+    setActiveSection('home');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <header className="w-full flex justify-center items-center z-20 relative pt-4 pb-2">
       <nav 
         aria-label="Main Navigation" 
         className="inline-flex items-center justify-center gap-[16px] mx-auto text-center"
       >
-        {/* Figma Component: LogoBadge */}
+        {/* Figma Component: LogoBadge - Scrolls to top/hero section */}
         <LogoBadge 
           active={activeSection === 'home'} 
-          onClick={() => handleNavClick('home')} 
+          onClick={handleLogoClick} 
         />
 
         {/* Figma Component: NavItems (work, about, connect, resume) */}
@@ -43,7 +48,9 @@ export default function Navbar() {
         />
         <NavItem 
           label="resume" 
-          href="#resume" 
+          href="/resume.pdf" 
+          target="_blank"
+          rel="noopener noreferrer"
           active={activeSection === 'resume'}
           onClick={() => handleNavClick('resume')}
         />

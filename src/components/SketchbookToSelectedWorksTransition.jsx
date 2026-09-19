@@ -81,12 +81,12 @@ export default function SketchbookToSelectedWorksTransition() {
           ref={selectedWorksRef}
           className={
             isPinned 
-              ? "fixed top-0 left-0 w-full z-10 flex flex-col items-center pointer-events-auto" 
-              : "relative w-full z-10 flex flex-col items-center"
+              ? "fixed top-0 left-0 w-full z-10 flex flex-col items-center pointer-events-auto bg-white" 
+              : "relative w-full z-10 flex flex-col items-center bg-white"
           }
         >
           {/* Global Page-Level Vertical Guide Threads Spanning Selected Works and Along The Way Continuously */}
-          <div className="w-full max-w-[1440px] absolute inset-0 pointer-events-none z-20 mx-auto">
+          <div className="w-full max-w-[1440px] absolute inset-0 pointer-events-none z-10 mx-auto">
             <div className="absolute left-[5.55556%] top-0 bottom-0 w-[1px] pointer-events-none">
               <svg className="w-[1px] h-full" preserveAspectRatio="none">
                 <line x1="0.5" y1="0" x2="0.5" y2="100%" stroke="#000000" strokeWidth="0.5" strokeDasharray="5 5" />

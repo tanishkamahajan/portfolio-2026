@@ -1,18 +1,21 @@
 import React from 'react';
 import ProjectCardWrapper from './ProjectCardWrapper';
+import ScrollReveal from './ScrollReveal';
 
 const alongProjects = [
   {
     id: 1,
-    title: 'Strava Redesign : Cognitive Ergonomics',
-    image: '/assets/along-strava.png',
+    title: 'Eva : Samsung Hackathon',
+    image: '/assets/along-eva.png',
     border: false,
+    link: 'https://www.behance.net/gallery/244027267/Eva-Agentic-AI-Companion-Design-%28Samsung-Hackathon%29',
   },
   {
     id: 2,
     title: 'Social Psychology of Intimate Clothing',
     image: '/assets/along-intimate-clothing.png',
     border: false,
+    link: 'https://www.behance.net/gallery/244590121/The-Social-Psychology-of-Intimate-Clothing',
   },
   {
     id: 3,
@@ -25,6 +28,7 @@ const alongProjects = [
     title: 'Research Paper : AI & Emotional Connection',
     image: '/assets/along-ai-emotion.png',
     border: true, // Figma node 527:259 has border-[#acacac]
+    pdf: '/Projects/Research Paper/AI and Emotional connection.pdf',
   },
   {
     id: 5,
@@ -37,6 +41,7 @@ const alongProjects = [
     title: 'Travia : A Gamified Travel Experience',
     image: '/assets/along-travia.png',
     border: false,
+    link: 'https://www.behance.net/gallery/244067043/Travia-A-Gamified-Travel-Companion-App',
   },
 ];
 
@@ -45,13 +50,13 @@ export default function AlongTheWay() {
   const doubleProjects = [...alongProjects, ...alongProjects];
 
   return (
-    <section className="w-full bg-white text-[#3e3d3d] relative py-0 flex flex-col items-center selection:bg-[#afcc0f] selection:text-black -mt-[140px]">
+    <section className="w-full max-w-full overflow-x-clip bg-transparent text-[#3e3d3d] relative z-20 py-0 flex flex-col items-center selection:bg-[#afcc0f] selection:text-black -mt-[140px]">
       
       {/* Outer Section Container */}
-      <div className="w-full flex flex-col items-center relative pt-[68px] pb-[60px]">
+      <div className="w-full max-w-full overflow-x-clip flex flex-col items-center relative pt-[68px] pb-[60px]">
 
         {/* Header Section Container (Centered horizontally as one group) */}
-        <div className="w-full max-w-[1440px] pt-0 pb-[44px] flex flex-col items-center justify-center text-center gap-[6px] relative z-10 px-4 mx-auto">
+        <ScrollReveal y={25} duration={0.6} className="w-full max-w-[1440px] pt-0 pb-[44px] flex flex-col items-center justify-center text-center gap-[6px] relative z-10 px-4 mx-auto">
           
           {/* Title Row: Icon + "Along the Way" Heading (Centered Group) */}
           <div className="flex items-center justify-center gap-[12px] relative z-10 flex-wrap">
@@ -78,14 +83,16 @@ export default function AlongTheWay() {
             Projects that did’nt make it to the main stage
           </p>
 
-        </div>
+        </ScrollReveal>
 
         {/* Full-Width Continuous Horizontal Auto-Scrolling Carousel Track */}
-        <div className="w-full overflow-hidden relative z-30 py-3 cursor-pointer bg-transparent">
-          <div className="animate-marquee flex gap-[24px] items-center hover:[animation-play-state:paused] pointer-events-auto">
+        <ScrollReveal y={30} duration={0.7} delay={0.12} className="w-full max-w-full overflow-hidden relative z-30 py-3 cursor-pointer bg-transparent">
+          <div className="animate-marquee flex flex-nowrap gap-[24px] items-center hover:[animation-play-state:paused] pointer-events-auto">
             {doubleProjects.map((project, index) => (
               <ProjectCardWrapper 
                 key={`${project.id}-${index}`} 
+                link={project.link}
+                pdf={project.pdf}
                 className="w-[372px] shrink-0 flex flex-col gap-[12px] items-start group relative z-30"
               >
                 {/* Project Image Frame (Figma 372px x 209px, rounded-[20px]) */}
@@ -104,7 +111,7 @@ export default function AlongTheWay() {
               </ProjectCardWrapper>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
 
       </div>
 

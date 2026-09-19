@@ -19,10 +19,14 @@ export default function NavItem({
   href = "#", 
   active = false, 
   onClick,
+  target,
+  rel,
   className = "" 
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const positionClass = labelPositions[label.toLowerCase()] || "inset-0 flex items-center justify-center";
+
+  const isShowCircle = active || isHovered;
 
   const handleClick = (e) => {
     if (onClick) {
@@ -33,27 +37,30 @@ export default function NavItem({
   return (
     <a
       href={href}
+      target={target}
+      rel={rel}
       onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`block cursor-pointer h-[44.998px] relative w-[100px] select-none group focus:outline-none ${className}`}
-      data-name={`Property 1=${active ? 'work circle' : 'Default'}`}
+      className={`block cursor-pointer h-[44.998px] relative w-[100px] select-none group focus:outline-none transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95 ${className}`}
+      data-name={`Property 1=${isShowCircle ? 'work circle' : 'Default'}`}
     >
-      {/* Clicked / Active State: Exact Figma Circle Overlay SVG */}
-      {active && (
-        <div className="absolute inset-[-3.3%_-1.44%_-3.03%_-1.65%] pointer-events-none z-0">
-          <img 
-            alt="" 
-            className="block max-w-none size-full object-contain" 
-            src="/assets/work-circle.svg" 
-          />
-        </div>
-      )}
+      {/* Hand-drawn Lime Green Circle Overlay SVG */}
+      <div 
+        className={`absolute inset-[-3.3%_-1.44%_-3.03%_-1.65%] pointer-events-none z-0 transition-opacity duration-200 ${
+          isShowCircle ? 'opacity-100' : 'opacity-0'
+        }`}
+      >
+        <img 
+          alt="" 
+          className="block max-w-none size-full object-contain" 
+          src="/assets/work-circle.svg" 
+        />
+      </div>
 
-      {/* Label Text with Exact Figma Alignment & Hover Pop Animation */}
+      {/* Label Text - WHITE ONLY text */}
       <span 
-        className={`[word-break:break-word] absolute font-gochi leading-[normal] not-italic text-white text-[20px] whitespace-nowrap z-10 transition-transform duration-200 ${positionClass} ${isHovered ? 'scale-110' : 'scale-100'}`}
-        style={{ transformOrigin: 'center center' }}
+        className={`[word-break:break-word] absolute font-gochi leading-[normal] not-italic text-white text-[20px] whitespace-nowrap z-10 ${positionClass}`}
       >
         {label}
       </span>

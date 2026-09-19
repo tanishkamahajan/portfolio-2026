@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /* Neue Montreal Custom Font Declarations from public/fonts/ */
 @font-face {
   font-family: 'Neue Montreal';
@@ -62,4 +63,69 @@ body {
 .hide-cursor,
 .hide-cursor * {
   cursor: none !important;
+}
+
+/* Tablet Proportional Scaling for Hero Sketchbook Composition */
+.sketchbook-unit {
+  --sketchbook-scale: 1;
+  position: relative;
+  width: calc(1018px * var(--sketchbook-scale));
+  height: calc(1249px * var(--sketchbook-scale));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1279px) {
+  .sketchbook-unit {
+    --sketchbook-scale: clamp(0.6, calc(100vw / 1280px), 1);
+  }
+}
+
+.sketchbook-scaler {
+  width: 1018px;
+  transform: scale(var(--sketchbook-scale));
+  transform-origin: top center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Tablet Proportional Scaling for Footer Composition (768px–1024px) */
+@media (max-width: 1279px) {
+  .footer-unit {
+    --footer-scale: clamp(0.5333, calc(100vw / 1440px), 1);
+    height: calc(526px * var(--footer-scale)) !important;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .footer-scaler {
+    width: 1440px !important;
+    height: 526px !important;
+    transform: scale(var(--footer-scale));
+    transform-origin: top center;
+    flex-shrink: 0;
+  }
+
+  /* Inside the scaled 1440px frame on tablet, lock elements to their exact 1440px Figma coordinates */
+  .footer-scaler .footer-lets-talk {
+    font-size: 342px !important;
+    left: calc(5.55556% + 31.5px) !important;
+    top: 282px !important;
+  }
+
+  .footer-scaler .footer-avatar-stack {
+    left: calc(50% + 65.08px - 177.08px) !important;
+    top: 134.46px !important;
+    transform: none !important;
+  }
+
+  .footer-scaler .footer-social-stack {
+    right: calc(5.55556% + 149.4px) !important;
+    top: 157.75px !important;
+  }
 }
