@@ -1,98 +1,85 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { useLenis } from 'lenis/react';
 
-const reloomItems = [
+const creditCardItems = [
   {
     id: '01',
     sectionId: 'overview',
     type: 'image',
-    src: '/Projects/Sustainable fashion/1. Reloom Cover.png',
-    alt: 'ReLoom Case Study - 01 Reloom Cover',
+    src: '/Projects/Credit card/01-Cover.png',
+    alt: 'Finora Credit Card Case Study - 01 Cover',
   },
   {
     id: '02',
-    sectionId: 'overview',
+    sectionId: 'context',
     type: 'image',
-    src: '/Projects/Sustainable fashion/2. About.png',
-    alt: 'ReLoom Case Study - 02 About',
+    src: '/Projects/Credit card/02-About.png',
+    alt: 'Finora Credit Card Case Study - 02 Context',
   },
   {
     id: '03',
-    sectionId: 'research',
+    sectionId: 'problem',
     type: 'image',
-    src: '/Projects/Sustainable fashion/3. Research.png',
-    alt: 'ReLoom Case Study - 03 Research',
+    src: '/Projects/Credit card/03-Problem.png',
+    alt: 'Finora Credit Card Case Study - 03 Problem',
   },
   {
     id: '04',
-    sectionId: 'insights',
+    sectionId: 'persona',
     type: 'image',
-    src: '/Projects/Sustainable fashion/4. Insights.png',
-    alt: 'ReLoom Case Study - 04 Insights',
+    src: '/Projects/Credit card/04-Persona.png',
+    alt: 'Finora Credit Card Case Study - 04 Persona',
   },
   {
     id: '05',
-    sectionId: 'personas',
+    sectionId: 'research',
     type: 'image',
-    src: '/Projects/Sustainable fashion/5. Personas.png',
-    alt: 'ReLoom Case Study - 05 Personas',
+    src: '/Projects/Credit card/05-Competitor and insights.png',
+    alt: 'Finora Credit Card Case Study - 05 Research',
   },
   {
     id: '06',
     sectionId: 'solution',
     type: 'image',
-    src: '/Projects/Sustainable fashion/6. Reloom App Solution.png',
-    alt: 'ReLoom Case Study - 06 Reloom App Solution',
+    src: '/Projects/Credit card/06-Adaptable UI.png',
+    alt: 'Finora Credit Card Case Study - 06 Solution',
   },
   {
     id: '07',
-    sectionId: 'solution',
+    sectionId: 'finora',
     type: 'image',
-    src: '/Projects/Sustainable fashion/7. Reloom Ui screens.png',
-    alt: 'ReLoom Case Study - 07 Reloom UI Screens',
+    src: '/Projects/Credit card/07-Finora.png',
+    alt: 'Finora Credit Card Case Study - 07 Finora',
   },
   {
     id: '08',
-    sectionId: 'value-proposition',
+    sectionId: 'flow',
     type: 'image',
-    src: '/Projects/Sustainable fashion/8. Value Prop an Worth.png',
-    alt: 'ReLoom Case Study - 08 Value Prop and Worth',
+    src: '/Projects/Credit card/8-Flow.png',
+    alt: 'Finora Credit Card Case Study - 08 Flow',
   },
   {
     id: '09',
-    sectionId: 'testing',
+    sectionId: 'takeaways',
     type: 'image',
-    src: '/Projects/Sustainable fashion/9. Testing.png',
-    alt: 'ReLoom Case Study - 09 Testing',
-  },
-  {
-    id: '10',
-    sectionId: 'reflection',
-    type: 'image',
-    src: '/Projects/Sustainable fashion/10. Reflection.png',
-    alt: 'ReLoom Case Study - 10 Reflection',
-  },
-  {
-    id: '11',
-    sectionId: 'reflection',
-    type: 'image',
-    src: '/Projects/Sustainable fashion/11. thanks.png',
-    alt: 'ReLoom Case Study - 11 Thanks',
+    src: '/Projects/Credit card/09-End.png',
+    alt: 'Finora Credit Card Case Study - 09 Takeaways',
   },
 ];
 
 const allNavItems = [
   { id: 'overview', label: 'Overview' },
+  { id: 'context', label: 'Context' },
+  { id: 'problem', label: 'Problem' },
+  { id: 'persona', label: 'Persona' },
   { id: 'research', label: 'Research' },
-  { id: 'insights', label: 'Insights' },
-  { id: 'personas', label: 'Personas' },
   { id: 'solution', label: 'Solution' },
-  { id: 'value-proposition', label: 'Value Proposition' },
-  { id: 'testing', label: 'Testing' },
-  { id: 'reflection', label: 'Reflection' },
+  { id: 'finora', label: 'Finora' },
+  { id: 'flow', label: 'Flow' },
+  { id: 'takeaways', label: 'Takeaways' },
 ];
 
-export default function ReloomCaseStudy() {
+export default function CreditCardCaseStudy() {
   const [activeSection, setActiveSection] = useState('overview');
   const [showBackButton, setShowBackButton] = useState(true);
   const [showSidebar, setShowSidebar] = useState(true);
@@ -133,7 +120,7 @@ export default function ReloomCaseStudy() {
       } else {
         // Active section tracking for sidebar
         const scrollPosition = currentScrollY + window.innerHeight / 3;
-        for (const item of reloomItems) {
+        for (const item of creditCardItems) {
           const el = itemRefs.current[item.id];
           if (el) {
             const top = el.offsetTop;
@@ -201,7 +188,7 @@ export default function ReloomCaseStudy() {
   }, []);
 
   const scrollToSection = (sectionId) => {
-    const targetItem = reloomItems.find((item) => item.sectionId === sectionId);
+    const targetItem = creditCardItems.find((item) => item.sectionId === sectionId);
     if (targetItem) {
       const el = itemRefs.current[targetItem.id];
       if (el) {
@@ -281,7 +268,7 @@ export default function ReloomCaseStudy() {
       >
         {allNavItems.map((item) => {
           const isActive = activeSection === item.id;
-          const isAvailable = reloomItems.some((i) => i.sectionId === item.id);
+          const isAvailable = creditCardItems.some((i) => i.sectionId === item.id);
 
           return (
             <button
@@ -311,7 +298,7 @@ export default function ReloomCaseStudy() {
 
       {/* Continuous 100% Full Viewport Width Presentation Stack */}
       <div className="w-full flex flex-col p-0 m-0 leading-none">
-        {reloomItems.map((item) => (
+        {creditCardItems.map((item) => (
           <div
             key={item.id}
             id={`item-${item.id}`}

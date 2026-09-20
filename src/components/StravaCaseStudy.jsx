@@ -124,8 +124,13 @@ const allNavItems = [
 export default function StravaCaseStudy() {
   const [activeSection, setActiveSection] = useState('overview');
   const [showBackButton, setShowBackButton] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [isSidebarHovered, setIsSidebarHovered] = useState(false);
+  const [isNearRightEdge, setIsNearRightEdge] = useState(false);
   const imageRefs = useRef({});
   const lastScrollY = useRef(0);
+  const scrollStopTimerRef = useRef(null);
+  const mouseEdgeTimerRef = useRef(null);
   const lenis = useLenis();
 
   // STRICT RULE: Reset scroll to top and set Overview as active section on page mount
@@ -141,6 +146,7 @@ export default function StravaCaseStudy() {
     }
     setActiveSection('overview');
     setShowBackButton(true);
+    setShowSidebar(true);
     lastScrollY.current = 0;
   }, [lenis]);
 
@@ -151,6 +157,8 @@ export default function StravaCaseStudy() {
       if (currentScrollY <= 50) {
         setActiveSection('overview');
         setShowBackButton(true);
+        setShowSidebar(true);
+        if (scrollStopTimerRef.current) clearTimeout(scrollStopTimerRef.current);
       } else {
         // Active section tracking for sidebar
         const scrollPosition = currentScrollY + window.innerHeight / 3;
@@ -166,10 +174,23 @@ export default function StravaCaseStudy() {
           }
         }
 
-        if (currentScrollY < lastScrollY.current - 8) {
+        if (currentScrollY < lastScrollY.current - 6) {
+          // Scrolling UP -> Fade back in
           setShowBackButton(true);
-        } else if (currentScrollY > lastScrollY.current + 8) {
+          setShowSidebar(true);
+
+          if (scrollStopTimerRef.current) clearTimeout(scrollStopTimerRef.current);
+          scrollStopTimerRef.current = setTimeout(() => {
+            if (window.scrollY > 50) {
+              setShowSidebar(false);
+            }
+          }, 1200);
+        } else if (currentScrollY > lastScrollY.current + 6) {
+          // Scrolling DOWN -> Fade out
           setShowBackButton(false);
+          setShowSidebar(false);
+
+          if (scrollStopTimerRef.current) clearTimeout(scrollStopTimerRef.current);
         }
       }
 
@@ -178,7 +199,32 @@ export default function StravaCaseStudy() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollStopTimerRef.current) clearTimeout(scrollStopTimerRef.current);
+    };
+  }, []);
+
+  // Reveal sidebar when cursor moves near right edge of the viewport (~240px threshold)
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const rightEdgeThreshold = window.innerWidth - 240;
+      if (e.clientX >= rightEdgeThreshold) {
+        setIsNearRightEdge(true);
+        if (mouseEdgeTimerRef.current) clearTimeout(mouseEdgeTimerRef.current);
+      } else {
+        if (mouseEdgeTimerRef.current) clearTimeout(mouseEdgeTimerRef.current);
+        mouseEdgeTimerRef.current = setTimeout(() => {
+          setIsNearRightEdge(false);
+        }, 1200);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (mouseEdgeTimerRef.current) clearTimeout(mouseEdgeTimerRef.current);
+    };
   }, []);
 
   const scrollToSection = (sectionId) => {
@@ -250,8 +296,16 @@ export default function StravaCaseStudy() {
         </svg>
       </a>
 
-      {/* Sticky Right Viewport Sidebar (Exact Fixed Dimensions Match to Zoo) */}
-      <nav className="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col justify-between w-[170px] h-[290px] p-5 rounded-[22px] bg-[#1d1b1a]/90 backdrop-blur-md border border-white/10 shadow-2xl select-none">
+      {/* Sticky Right Viewport Sidebar (Matching Zoo exact styling and spacing) */}
+      <nav 
+        onMouseEnter={() => setIsSidebarHovered(true)}
+        onMouseLeave={() => setIsSidebarHovered(false)}
+        className={`fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3 md:gap-3.5 w-[170px] p-5 rounded-[22px] bg-[#1d1b1a]/90 backdrop-blur-md border border-white/10 shadow-2xl select-none transition-all duration-500 ease-in-out ${
+          showSidebar || isSidebarHovered || isNearRightEdge
+            ? 'opacity-100 translate-x-0 pointer-events-auto'
+            : 'opacity-0 translate-x-3 pointer-events-none'
+        }`}
+      >
         {allNavItems.map((item) => {
           const isActive = activeSection === item.id;
           const isAvailable = stravaImages.some((img) => img.sectionId === item.id);
@@ -261,7 +315,7 @@ export default function StravaCaseStudy() {
               key={item.id}
               onClick={() => isAvailable && scrollToSection(item.id)}
               disabled={!isAvailable}
-              className={`flex items-center justify-between gap-2 w-full text-xs md:text-sm font-neue tracking-wide transition-all duration-300 ${
+              className={`flex items-center justify-between gap-2 w-full text-[11px] md:text-xs font-neue tracking-wide transition-all duration-300 ${
                 isActive
                   ? 'text-white font-bold opacity-100'
                   : isAvailable

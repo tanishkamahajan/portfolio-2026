@@ -8,7 +8,7 @@ const projects = [
     title: 'A zoo animal management system bringing animal care, teams, and operations together.',
     year: '2025',
     tags: ['Object-Oriented UX', 'Enterprise UX'],
-    borderColor: 'border-[#afcc0f]',
+    borderColor: 'group-hover:border-[#69A789]',
     borderRadius: 'rounded-[30px]',
     imageRight: true,
     image: '/Projects/Zoo/01-Home.png',
@@ -19,7 +19,7 @@ const projects = [
     title: 'How might we make circular fashion a choice people actually want to make?',
     year: '2025',
     tags: ['Interaction Design', 'Sustainability'],
-    borderColor: 'border-[#5d5c5c]',
+    borderColor: 'group-hover:border-[#cec656]',
     borderRadius: 'rounded-[30px]',
     imageRight: false,
     image: '/assets/project-2-cover.png',
@@ -30,16 +30,18 @@ const projects = [
     title: 'Reimagined the credit-card application journey into a intelligent and personalized experience.',
     year: '2026',
     tags: ['Internship Project', 'Fintech'],
-    borderColor: 'border-[#afcc0f]',
+    borderColor: 'group-hover:border-[#7772C0]',
     borderRadius: 'rounded-[30px]',
     imageRight: true,
+    image: '/assets/finora-cover.png',
+    link: '/finora',
   },
   {
     id: 4,
     title: 'What if better usability could change the way we experience Strava?',
     year: '2026',
     tags: ['Cognitive Ergonomics', 'Redesign'],
-    borderColor: 'border-[#afcc0f]',
+    borderColor: 'group-hover:border-[#F44B04]',
     borderRadius: 'rounded-[30px]',
     imageRight: false,
     image: '/assets/project-4-cover.png',
@@ -186,7 +188,7 @@ export default function SelectedWorks() {
                   >
                     
                     {/* Mockup Frame (Figma 510px x 287px, exact 510:287 aspect ratio preserved) */}
-                    <div className={`w-[clamp(270px,35.42vw,510px)] aspect-[510/287] shrink-0 border-4 border-white ${project.borderRadius} overflow-hidden shadow-[0px_6px_24px_rgba(0,0,0,0.08)] relative bg-[#fffdfa] transform transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:scale-[1.008] group-hover:${project.borderColor} group-hover:shadow-[0px_12px_32px_rgba(0,0,0,0.14)]`}>
+                    <div className={`w-[clamp(270px,35.42vw,510px)] aspect-[510/287] shrink-0 border-4 border-white ${project.borderRadius} overflow-hidden shadow-[0px_6px_24px_rgba(0,0,0,0.08)] relative bg-[#fffdfa] transform transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:scale-[1.008] ${project.borderColor} group-hover:shadow-[0px_12px_32px_rgba(0,0,0,0.14)]`}>
                       <img 
                         src={project.image || "/assets/project-card-mock.png"} 
                         alt={project.title} 

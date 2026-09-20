@@ -456,7 +456,7 @@ export default function ZooCaseStudy() {
       <nav 
         onMouseEnter={() => setIsSidebarHovered(true)}
         onMouseLeave={() => setIsSidebarHovered(false)}
-        className={`fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col justify-between w-[170px] h-[290px] p-5 rounded-[22px] bg-[#1d1b1a]/90 backdrop-blur-md border border-white/10 shadow-2xl select-none transition-all duration-500 ease-in-out ${
+        className={`fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3 md:gap-3.5 w-[170px] p-5 rounded-[22px] bg-[#1d1b1a]/90 backdrop-blur-md border border-white/10 shadow-2xl select-none transition-all duration-500 ease-in-out ${
           showSidebar || isSidebarHovered || isNearRightEdge
             ? 'opacity-100 translate-x-0 pointer-events-auto'
             : 'opacity-0 translate-x-3 pointer-events-none'

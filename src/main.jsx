@@ -6,6 +6,7 @@ import App from './App.jsx'
 import StravaCaseStudy from './components/StravaCaseStudy.jsx'
 import ZooCaseStudy from './components/ZooCaseStudy.jsx'
 import ReloomCaseStudy from './components/ReloomCaseStudy.jsx'
+import CreditCardCaseStudy from './components/CreditCardCaseStudy.jsx'
 import './index.css'
 
 if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
@@ -84,6 +85,8 @@ function RootRouter() {
     content = <ZooCaseStudy key="zoo" />;
   } else if (currentPath === '/reloom' || currentPath.startsWith('/reloom') || currentPath === '/sustainable-fashion' || currentPath.startsWith('/sustainable-fashion')) {
     content = <ReloomCaseStudy key="reloom" />;
+  } else if (currentPath === '/finora' || currentPath.startsWith('/finora') || currentPath === '/credit-card' || currentPath.startsWith('/credit-card') || currentPath === '/creditcard' || currentPath.startsWith('/creditcard')) {
+    content = <CreditCardCaseStudy key="creditcard" />;
   } else {
     content = <App key="home" />;
   }
