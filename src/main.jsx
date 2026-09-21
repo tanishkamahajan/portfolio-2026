@@ -7,6 +7,7 @@ import StravaCaseStudy from './components/StravaCaseStudy.jsx'
 import ZooCaseStudy from './components/ZooCaseStudy.jsx'
 import ReloomCaseStudy from './components/ReloomCaseStudy.jsx'
 import CreditCardCaseStudy from './components/CreditCardCaseStudy.jsx'
+import AboutPage from './components/AboutPage.jsx'
 import './index.css'
 
 if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
@@ -17,11 +18,29 @@ function PageScrollReset({ currentPath }) {
   const lenis = useLenis();
 
   useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-    if (lenis) {
-      lenis.scrollTo(0, { immediate: true });
+    const hash = window.location.hash;
+    if (hash) {
+      const scrollToHash = () => {
+        const el = document.querySelector(hash);
+        if (el) {
+          if (lenis) {
+            lenis.scrollTo(el, { immediate: true });
+          } else {
+            el.scrollIntoView();
+          }
+        }
+      };
+      
+      scrollToHash();
+      const timer = setTimeout(scrollToHash, 50);
+      return () => clearTimeout(timer);
+    } else {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: true });
+      }
     }
   }, [currentPath, lenis]);
 
@@ -69,9 +88,6 @@ function RootRouter() {
   useEffect(() => {
     const handleLocationChange = () => {
       setCurrentPath(window.location.pathname)
-      window.scrollTo(0, 0)
-      document.documentElement.scrollTop = 0
-      document.body.scrollTop = 0
     }
 
     window.addEventListener('popstate', handleLocationChange)
@@ -87,6 +103,8 @@ function RootRouter() {
     content = <ReloomCaseStudy key="reloom" />;
   } else if (currentPath === '/finora' || currentPath.startsWith('/finora') || currentPath === '/credit-card' || currentPath.startsWith('/credit-card') || currentPath === '/creditcard' || currentPath.startsWith('/creditcard')) {
     content = <CreditCardCaseStudy key="creditcard" />;
+  } else if (currentPath === '/about' || currentPath.startsWith('/about')) {
+    content = <AboutPage key="about" />;
   } else {
     content = <App key="home" />;
   }

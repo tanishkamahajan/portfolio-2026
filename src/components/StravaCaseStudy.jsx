@@ -127,6 +127,7 @@ export default function StravaCaseStudy() {
   const [showSidebar, setShowSidebar] = useState(true);
   const [isSidebarHovered, setIsSidebarHovered] = useState(false);
   const [isNearRightEdge, setIsNearRightEdge] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const imageRefs = useRef({});
   const lastScrollY = useRef(0);
   const scrollStopTimerRef = useRef(null);
@@ -239,9 +240,8 @@ export default function StravaCaseStudy() {
 
   const handleBack = (e) => {
     e.preventDefault();
-    window.history.pushState({}, '', '/');
+    window.history.pushState({}, '', '/#work');
     window.dispatchEvent(new Event('popstate'));
-    window.scrollTo(0, 0);
   };
 
   return (
@@ -249,7 +249,7 @@ export default function StravaCaseStudy() {
       
       {/* Context-Aware Floating Top-Left Back Button */}
       <a
-        href="/"
+        href="/#work"
         onClick={handleBack}
         className={`fixed top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 z-50 text-white mix-blend-difference transition-all duration-300 ease-in-out cursor-pointer select-none origin-top-left p-0 m-0 bg-transparent border-none shadow-none scale-85 sm:scale-95 md:scale-100 ${
           showBackButton
@@ -296,11 +296,79 @@ export default function StravaCaseStudy() {
         </svg>
       </a>
 
-      {/* Sticky Right Viewport Sidebar (Matching Zoo exact styling and spacing) */}
+      {/* Mobile Floating Bottom Navigation (< md) */}
+      <div className="fixed bottom-5 right-4 z-50 md:hidden select-none flex flex-col items-end">
+        {/* Mobile Dropdown Menu */}
+        {mobileMenuOpen && (
+          <div className="mb-2 w-[180px] p-3 rounded-[18px] bg-[#1d1b1a]/95 backdrop-blur-md border border-white/15 shadow-2xl flex flex-col gap-2.5">
+            <div className="flex items-center justify-between pb-1 border-b border-white/10 text-[11px] font-neue text-[#888888] px-1">
+              <span>SECTIONS</span>
+              <button 
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-white/60 hover:text-white text-[13px] leading-none"
+              >
+                ✕
+              </button>
+            </div>
+            {allNavItems.map((item) => {
+              const isActive = activeSection === item.id;
+              const isAvailable = stravaImages.some((img) => img.sectionId === item.id);
+
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    if (isAvailable) {
+                      scrollToSection(item.id);
+                      setMobileMenuOpen(false);
+                    }
+                  }}
+                  disabled={!isAvailable}
+                  className={`flex items-center justify-between gap-2 w-full text-[12px] font-neue px-1 py-0.5 transition-all duration-200 ${
+                    isActive
+                      ? 'text-white font-bold opacity-100'
+                      : isAvailable
+                      ? 'text-[#888888] active:text-white font-medium opacity-80'
+                      : 'text-white/20 cursor-not-allowed opacity-30'
+                  }`}
+                >
+                  <span className="text-left leading-tight truncate">{item.label}</span>
+                  <span
+                    className={`rounded-full transition-all duration-300 shrink-0 ${
+                      isActive
+                        ? 'w-2 h-2 bg-[#afcc0f] shadow-[0_0_8px_#afcc0f]'
+                        : 'w-1.5 h-1.5 bg-[#555555]'
+                    }`}
+                  />
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Mobile Pill Button */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className={`flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#1d1b1a]/90 backdrop-blur-md border border-white/15 shadow-xl text-white text-[12px] font-neue transition-all duration-300 active:scale-95 ${
+            showBackButton || showSidebar ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'
+          }`}
+          aria-label="Table of Contents"
+        >
+          <span className="w-2 h-2 rounded-full bg-[#afcc0f] shadow-[0_0_6px_#afcc0f] shrink-0" />
+          <span className="capitalize font-medium truncate max-w-[100px]">
+            {allNavItems.find((i) => i.id === activeSection)?.label || 'Sections'}
+          </span>
+          <span className="text-[10px] text-[#888888] ml-0.5">
+            {mobileMenuOpen ? '▼' : '▲'}
+          </span>
+        </button>
+      </div>
+
+      {/* Sticky Right Viewport Sidebar (Desktop >= md) */}
       <nav 
         onMouseEnter={() => setIsSidebarHovered(true)}
         onMouseLeave={() => setIsSidebarHovered(false)}
-        className={`fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3 md:gap-3.5 w-[170px] p-5 rounded-[22px] bg-[#1d1b1a]/90 backdrop-blur-md border border-white/10 shadow-2xl select-none transition-all duration-500 ease-in-out ${
+        className={`hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 z-50 flex-col gap-3 md:gap-3.5 w-[170px] p-5 rounded-[22px] bg-[#1d1b1a]/90 backdrop-blur-md border border-white/10 shadow-2xl select-none transition-all duration-500 ease-in-out ${
           showSidebar || isSidebarHovered || isNearRightEdge
             ? 'opacity-100 translate-x-0 pointer-events-auto'
             : 'opacity-0 translate-x-3 pointer-events-none'

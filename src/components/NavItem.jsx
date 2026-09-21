@@ -42,7 +42,7 @@ export default function NavItem({
       onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`block cursor-pointer h-[44.998px] relative w-[100px] select-none group focus:outline-none transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95 ${className}`}
+      className={`nav-item-btn block cursor-pointer h-[36px] w-[58px] sm:h-[40px] sm:w-[72px] md:h-[44.998px] md:w-[100px] relative select-none group focus:outline-none transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95 shrink-0 ${className}`}
       data-name={`Property 1=${isShowCircle ? 'work circle' : 'Default'}`}
     >
       {/* Hand-drawn Lime Green Circle Overlay SVG */}
@@ -60,7 +60,7 @@ export default function NavItem({
 
       {/* Label Text - WHITE ONLY text */}
       <span 
-        className={`[word-break:break-word] absolute font-gochi leading-[normal] not-italic text-white text-[20px] whitespace-nowrap z-10 ${positionClass}`}
+        className={`nav-item-text [word-break:break-word] absolute font-gochi leading-[normal] not-italic text-white text-[15px] sm:text-[17px] md:text-[20px] whitespace-nowrap z-10 ${positionClass}`}
       >
         {label}
       </span>

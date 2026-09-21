@@ -16,7 +16,7 @@ export default function LogoBadge({ active = true, onClick, className = "" }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       aria-label="Home / TM Logo"
-      className={`block cursor-pointer h-[39.051px] relative w-[51.399px] transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95 focus:outline-none ${className}`}
+      className={`nav-logo-badge block cursor-pointer h-[32px] w-[42px] sm:h-[35px] sm:w-[46px] md:h-[39.051px] md:w-[51.399px] transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95 focus:outline-none shrink-0 ${className}`}
       data-node-id={showLime ? "421:227" : "421:222"}
       data-name={`Property 1=${showLime ? 'Variant2' : 'Default'}`}
     >

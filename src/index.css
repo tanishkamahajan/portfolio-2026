@@ -65,7 +65,43 @@ body {
   cursor: none !important;
 }
 
-/* Tablet Proportional Scaling for Hero Sketchbook Composition */
+/* Responsive Proportional Scaling for Hero Collage Composition (824px x 418px) */
+.hero-collage-unit {
+  --hero-scale: 1;
+  position: relative;
+  width: calc(824px * var(--hero-scale));
+  height: calc(418px * var(--hero-scale));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Tablet Proportional Scaling for Hero Collage Composition (768px–1279px) */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .hero-collage-unit {
+    --hero-scale: clamp(0.75, calc((100vw * 0.25 + 192px) / 512px), 1);
+  }
+}
+
+/* Desktop Proportional Fluid Scaling for Hero Collage Composition (1280px+) */
+@media (min-width: 1280px) {
+  .hero-collage-unit {
+    --hero-scale: clamp(0.8889, calc(100vw / 1440px), 1.15);
+  }
+}
+
+.hero-collage-scaler {
+  width: 824px;
+  transform: scale(var(--hero-scale));
+  transform-origin: top center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Proportional Scaling for About Page Sketchbook Composition */
 .sketchbook-unit {
   --sketchbook-scale: 1;
   position: relative;
@@ -79,7 +115,7 @@ body {
 
 @media (max-width: 1279px) {
   .sketchbook-unit {
-    --sketchbook-scale: clamp(0.6, calc(100vw / 1280px), 1);
+    --sketchbook-scale: clamp(0.3, calc((100vw - 32px) / 1018px), 1);
   }
 }
 
@@ -93,39 +129,165 @@ body {
   flex-shrink: 0;
 }
 
-/* Tablet Proportional Scaling for Footer Composition (768px–1024px) */
-@media (max-width: 1279px) {
+/* Tablet Proportional Scaling for Footer Composition (768px–1279px) */
+@media (min-width: 768px) and (max-width: 1279px) {
   .footer-unit {
-    --footer-scale: clamp(0.5333, calc(100vw / 1440px), 1);
-    height: calc(526px * var(--footer-scale)) !important;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
+    --footer-scale: clamp(0.55, calc(100vw / 1440px), 0.8889);
+    height: clamp(340px, calc(526px * var(--footer-scale)), 526px) !important;
+    width: 100% !important;
+    max-width: 1440px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: block !important;
   }
 
   .footer-scaler {
-    width: 1440px !important;
-    height: 526px !important;
-    transform: scale(var(--footer-scale));
-    transform-origin: top center;
-    flex-shrink: 0;
-  }
-
-  /* Inside the scaled 1440px frame on tablet, lock elements to their exact 1440px Figma coordinates */
-  .footer-scaler .footer-lets-talk {
-    font-size: 342px !important;
-    left: calc(5.55556% + 31.5px) !important;
-    top: 282px !important;
-  }
-
-  .footer-scaler .footer-avatar-stack {
-    left: calc(50% + 65.08px - 177.08px) !important;
-    top: 134.46px !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: relative !important;
     transform: none !important;
   }
 
-  .footer-scaler .footer-social-stack {
-    right: calc(5.55556% + 149.4px) !important;
-    top: 157.75px !important;
+  /* Giant "let’s talk" Typography */
+  .footer-lets-talk {
+    font-size: clamp(180px, calc(342px * var(--footer-scale)), 304px) !important;
+    left: calc(5.55556% + clamp(16px, calc(31.5px * var(--footer-scale)), 31.5px)) !important;
+    top: clamp(170px, calc(282px * var(--footer-scale)), 282px) !important;
+    letter-spacing: -0.02em !important;
+    line-height: 0.82 !important;
+    z-index: 1 !important;
+  }
+
+  /* Center Avatar & Email Stack */
+  .footer-avatar-stack {
+    width: clamp(210px, calc(354.16px * var(--footer-scale)), 354.16px) !important;
+    left: calc(50% + clamp(24px, calc(65.08px * var(--footer-scale)), 65.08px) - clamp(105px, calc(177.08px * var(--footer-scale)), 177.08px)) !important;
+    top: clamp(70px, calc(134.46px * var(--footer-scale)), 134.46px) !important;
+  }
+
+  /* Avatar Image inside stack */
+  .footer-avatar-img-box {
+    margin-left: clamp(40px, calc(77px * var(--footer-scale)), 77px) !important;
+    margin-top: clamp(12px, calc(24px * var(--footer-scale)), 24px) !important;
+    width: clamp(140px, calc(219.85px * var(--footer-scale)), 219.85px) !important;
+    height: clamp(100px, calc(159.6px * var(--footer-scale)), 159.6px) !important;
+  }
+
+  .footer-avatar-img-inner {
+    width: clamp(130px, calc(205.55px * var(--footer-scale)), 205.55px) !important;
+    height: clamp(87px, calc(137.03px * var(--footer-scale)), 137.03px) !important;
+  }
+
+  /* Email Button inside stack */
+  .footer-email-btn {
+    width: clamp(92px, calc(92px + (100vw - 768px) * 14 / 512), 106px) !important;
+    gap: 4px !important;
+    margin-bottom: -10px !important;
+  }
+
+  .footer-email-box {
+    width: 100% !important;
+    height: clamp(32px, calc(32px + (100vw - 768px) * 4 / 512), 36px) !important;
+  }
+
+  .footer-email-sub {
+    font-size: clamp(12px, calc(12px + (100vw - 768px) * 2 / 512), 14px) !important;
+  }
+
+  /* Social Links Stack */
+  .footer-social-stack {
+    width: clamp(94px, calc(94px + (100vw - 768px) * 28 / 512), 122px) !important;
+    right: calc(5.55556% + clamp(36px, calc(36px + (100vw - 768px) * 76 / 512), 112px)) !important;
+    top: clamp(85px, calc(85px + (100vw - 768px) * 55 / 512), 140px) !important;
+    gap: clamp(6px, calc(6px + (100vw - 768px) * 2 / 512), 8px) !important;
+    z-index: 25 !important;
+  }
+
+  /* Social Buttons - Compact & Proportional to prevent distortion */
+  .footer-resume-btn {
+    width: clamp(92px, calc(92px + (100vw - 768px) * 17 / 512), 109px) !important;
+    height: clamp(33px, calc(33px + (100vw - 768px) * 6 / 512), 39px) !important;
+  }
+
+  .footer-behance-btn {
+    width: 100% !important;
+    height: clamp(40px, calc(40px + (100vw - 768px) * 10 / 512), 50px) !important;
+  }
+
+  .footer-behance-inner {
+    width: 100% !important;
+    height: clamp(34px, calc(34px + (100vw - 768px) * 8.5 / 512), 42.5px) !important;
+  }
+
+  .footer-linkedin-btn {
+    width: clamp(92px, calc(92px + (100vw - 768px) * 16.5 / 512), 108.5px) !important;
+    height: clamp(38px, calc(38px + (100vw - 768px) * 6 / 512), 44px) !important;
+    position: relative !important;
+    z-index: 30 !important;
+  }
+
+  .footer-linkedin-rotate {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: relative !important;
+    z-index: 30 !important;
+  }
+
+  .footer-linkedin-inner {
+    width: clamp(88px, calc(88px + (100vw - 768px) * 18 / 512), 106px) !important;
+    height: clamp(30px, calc(30px + (100vw - 768px) * 6 / 512), 36px) !important;
+    position: relative !important;
+    z-index: 30 !important;
+  }
+
+  /* Contact Circle Text: Proportioned & centered perfectly without distortion */
+  .footer-circle-text {
+    font-size: clamp(17px, calc(17px + (100vw - 768px) * 6.5 / 512), 23.5px) !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 30 !important;
   }
 }
+
+/* Dedicated Narrow-Mobile Breakpoint (<= 340px) for Hero Composition */
+@media (max-width: 340px) {
+  .hero-mobile-tagline {
+    font-size: 10.5px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .hero-mobile-collage {
+    width: 160px !important;
+    margin-top: 6px !important;
+    margin-bottom: 30px !important;
+  }
+
+  .hero-mobile-intro {
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    max-width: 284px !important;
+  }
+}
+
+/* Fluid Tablet Navbar (768px–1279px) -> Continuous into Desktop at 1280px */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .nav-container {
+    gap: clamp(12px, calc(12px + (100vw - 768px) * 4 / 512), 16px) !important;
+  }
+  .nav-logo-badge {
+    width: clamp(45px, calc(45px + (100vw - 768px) * 6.4 / 512), 51.4px) !important;
+    height: clamp(35px, calc(35px + (100vw - 768px) * 4 / 512), 39px) !important;
+  }
+  .nav-item-btn {
+    width: clamp(82px, calc(82px + (100vw - 768px) * 18 / 512), 100px) !important;
+    height: clamp(41px, calc(41px + (100vw - 768px) * 4 / 512), 45px) !important;
+  }
+  .nav-item-text {
+    font-size: clamp(17.5px, calc(17.5px + (100vw - 768px) * 2.5 / 512), 20px) !important;
+  }
+}
+

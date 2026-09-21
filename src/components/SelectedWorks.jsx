@@ -135,30 +135,59 @@ export default function SelectedWorks() {
     <section id="work" className="w-full bg-transparent text-[#3e3d3d] relative z-20 py-0 flex flex-col items-center selection:bg-[#afcc0f] selection:text-black">
       
       {/* Outer Section Container spanning 100% full screen width */}
-      <div className="w-full flex flex-col items-center relative min-h-[1400px] xl:min-h-[2322px]">
+      <div className="w-full flex flex-col items-center relative min-h-0 md:min-h-[1400px] xl:min-h-[2322px]">
         
         {/* Header Section Container (Responsive 1440px centered container) */}
-        <ScrollReveal y={25} duration={0.6} className="w-full max-w-[1440px] pt-[62px] pb-[68px] flex items-end justify-center gap-[4px] relative z-10 px-4">
+        <ScrollReveal y={25} duration={0.6} className="w-full max-w-[1440px] pt-10 pb-8 md:pt-[62px] md:pb-[68px] flex flex-col items-center justify-center relative z-10 px-4">
 
-          {/* Icon (Figma Node 373:426 - 98.28px x 109.3px, inner 80.18px x 94.54px rotate 12.15deg) */}
-          <div className="w-[80px] h-[95px] md:w-[98px] md:h-[109px] relative shrink-0 flex items-center justify-center">
-            <div className="w-[80px] h-[95px] rotate-[12.15deg] transform shrink-0">
-              <img 
-                src="/assets/selected-works-icon.png" 
-                alt="Selected Works Icon" 
-                className="w-full h-full object-contain pointer-events-none" 
-              />
+          {/* Mobile Header Group (< 768px): One unified centered group with icon tight to heading */}
+          <div className="flex flex-col items-center justify-center w-full md:hidden">
+            <div className="flex items-center justify-center gap-2">
+              {/* Icon (Artwork and dimensions preserved, moved close to heading) */}
+              <div className="w-[60px] h-[72px] relative shrink-0 flex items-center justify-center">
+                <div className="w-[56px] h-[68px] rotate-[12.15deg] transform shrink-0">
+                  <img 
+                    src="/assets/selected-works-icon.png" 
+                    alt="Selected Works Icon" 
+                    className="w-full h-full object-contain pointer-events-none" 
+                  />
+                </div>
+              </div>
+
+              {/* Title */}
+              <h2 className="font-neue font-bold text-[#3e3d3d] text-[28px] sm:text-[34px] tracking-[-0.6px] leading-tight whitespace-nowrap">
+                Selected Works
+              </h2>
             </div>
-          </div>
 
-          {/* Title & Subtitle Stack (Figma Node 373:427 - Width 304px, Gap 8px) */}
-          <div className="w-[304px] max-w-full flex flex-col gap-[8px] items-center">
-            <h2 className="font-neue font-bold text-[#3e3d3d] text-[36px] md:text-[44px] tracking-[-0.88px] leading-normal w-full text-center">
-              Selected Works
-            </h2>
-            <p className="font-gochi text-[#636262] text-[16px] text-center leading-normal w-full">
+            {/* Subtitle centered directly under the icon + heading group sharing the central axis */}
+            <p className="font-gochi text-[#636262] text-[14px] sm:text-[16px] text-center leading-normal mt-1 sm:mt-1.5 w-full">
               so... this is what I've been figuring out.
             </p>
+          </div>
+
+          {/* Desktop / Tablet Header Group (768px+): Exact existing layout preserved */}
+          <div className="hidden md:flex items-end justify-center gap-[4px]">
+            {/* Icon (Figma Node 373:426 - 98.28px x 109.3px, inner 80.18px x 94.54px rotate 12.15deg) */}
+            <div className="w-[98px] h-[109px] relative shrink-0 flex items-center justify-center">
+              <div className="w-[80px] h-[95px] rotate-[12.15deg] transform shrink-0">
+                <img 
+                  src="/assets/selected-works-icon.png" 
+                  alt="Selected Works Icon" 
+                  className="w-full h-full object-contain pointer-events-none" 
+                />
+              </div>
+            </div>
+
+            {/* Title & Subtitle Stack (Figma Node 373:427 - Gap 8px) */}
+            <div className="w-auto max-w-full flex flex-col gap-[8px] items-center">
+              <h2 className="font-neue font-bold text-[#3e3d3d] md:text-[clamp(34px,3.8vw,44px)] xl:text-[44px] tracking-[-0.88px] leading-normal w-full text-center whitespace-nowrap">
+                Selected Works
+              </h2>
+              <p className="font-gochi text-[#636262] text-[16px] text-center leading-normal w-full">
+                so... this is what I've been figuring out.
+              </p>
+            </div>
           </div>
 
         </ScrollReveal>
@@ -168,27 +197,27 @@ export default function SelectedWorks() {
           {projects.map((project) => (
             <div 
               key={project.id} 
-              className="w-full min-h-[280px] md:h-[clamp(280px,33.8vw,487px)] xl:h-[487px] relative flex items-center justify-center py-6 md:py-0"
+              className="w-full relative flex items-center justify-center py-7 sm:py-9 md:py-0 md:h-[clamp(280px,33.8vw,487px)] xl:h-[487px]"
             >
               {/* Full Viewport Width Edge-to-Edge Horizontal Dashed Line */}
               <DashedHorizontalLine />
 
               {/* 1440px Centered Content Frame */}
-              <div className="w-full max-w-[1440px] h-full flex items-center justify-center px-4 lg:px-[clamp(24px,4.44vw,64px)] relative">
+              <div className="w-full max-w-[1440px] h-full flex items-center justify-center px-5 sm:px-6 lg:px-[clamp(24px,4.44vw,64px)] relative">
 
                 {/* Corner Dark Square Dots centered on responsive vertical guide lines */}
-                <div className="absolute top-[-5px] left-[5.55556%] -translate-x-1/2 w-[10px] h-[10px] bg-[#191818] border border-[#151414] pointer-events-none z-20" />
-                <div className="absolute top-[-5px] right-[5.55556%] translate-x-1/2 w-[10px] h-[10px] bg-[#191818] border border-[#151414] pointer-events-none z-20" />
+                <div className="hidden md:block absolute top-[-5px] left-[5.55556%] -translate-x-1/2 w-[10px] h-[10px] bg-[#191818] border border-[#151414] pointer-events-none z-20" />
+                <div className="hidden md:block absolute top-[-5px] right-[5.55556%] translate-x-1/2 w-[10px] h-[10px] bg-[#191818] border border-[#151414] pointer-events-none z-20" />
 
                 {/* Card & Text Container wrapped with ScrollReveal */}
                 <ScrollReveal y={35} duration={0.65} delay={0.05} className="w-full flex justify-center">
                   <ProjectCardWrapper 
                     link={project.link}
-                    className={`group cursor-pointer w-full max-w-[clamp(560px,74.03vw,1066px)] flex ${project.imageRight ? 'flex-row-reverse' : 'flex-row'} items-center justify-between gap-[clamp(24px,3.89vw,56px)] relative z-20`}
+                    className={`group cursor-pointer w-full max-w-[340px] sm:max-w-[390px] md:max-w-[clamp(560px,74.03vw,1066px)] mx-auto flex flex-col ${project.imageRight ? 'md:flex-row-reverse' : 'md:flex-row'} items-center justify-between gap-4 md:gap-[clamp(24px,3.89vw,56px)] relative z-20`}
                   >
                     
                     {/* Mockup Frame (Figma 510px x 287px, exact 510:287 aspect ratio preserved) */}
-                    <div className={`w-[clamp(270px,35.42vw,510px)] aspect-[510/287] shrink-0 border-4 border-white ${project.borderRadius} overflow-hidden shadow-[0px_6px_24px_rgba(0,0,0,0.08)] relative bg-[#fffdfa] transform transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:scale-[1.008] ${project.borderColor} group-hover:shadow-[0px_12px_32px_rgba(0,0,0,0.14)]`}>
+                    <div className={`w-full md:w-[clamp(270px,35.42vw,510px)] aspect-[510/287] shrink-0 border-[3px] md:border-4 border-white rounded-[20px] md:${project.borderRadius} overflow-hidden shadow-[0px_4px_16px_rgba(0,0,0,0.08)] md:shadow-[0px_6px_24px_rgba(0,0,0,0.08)] relative bg-[#fffdfa] transform transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:scale-[1.008] ${project.borderColor} group-hover:shadow-[0px_12px_32px_rgba(0,0,0,0.14)]`}>
                       <img 
                         src={project.image || "/assets/project-card-mock.png"} 
                         alt={project.title} 
@@ -196,18 +225,18 @@ export default function SelectedWorks() {
                       />
                     </div>
 
-                    {/* Text Container (Proportional scaling across tablet and desktop) */}
-                    <div className="w-[clamp(266px,34.72vw,500px)] shrink-0 flex flex-col gap-[clamp(12px,1.67vw,24px)] items-start justify-center">
-                      <h3 className="font-neue font-bold text-[#3e3d3d] text-[clamp(18px,2.22vw,32px)] tracking-[-0.64px] leading-normal w-full">
+                    {/* Text Container (Stacked cleanly on mobile, proportional scaling across tablet and desktop) */}
+                    <div className="w-full md:w-[clamp(266px,34.72vw,500px)] shrink-0 flex flex-col gap-2 md:gap-[clamp(12px,1.67vw,24px)] items-start justify-center">
+                      <h3 className="font-neue font-bold text-[#3e3d3d] text-[18px] sm:text-[20px] md:text-[clamp(18px,2.22vw,32px)] tracking-[-0.4px] md:tracking-[-0.64px] leading-snug md:leading-normal w-full">
                         {project.title}
                       </h3>
 
                       {/* Tag Metadata (Proportional font size and gap) */}
-                      <div className="flex items-center gap-[clamp(8px,0.97vw,14px)] text-[#636262] font-neue font-medium text-[clamp(13px,1.11vw,16px)] flex-wrap">
+                      <div className="flex items-center gap-2 md:gap-[clamp(8px,0.97vw,14px)] text-[#636262] font-neue font-medium text-[12px] sm:text-[13px] md:text-[clamp(13px,1.11vw,16px)] flex-wrap">
                         <span>{project.year}</span>
                         {project.tags.map((tag, idx) => (
                           <React.Fragment key={idx}>
-                            <span className="w-px h-[14px] bg-[#636262]/60 inline-block shrink-0" />
+                            <span className="w-px h-[12px] md:h-[14px] bg-[#636262]/60 inline-block shrink-0" />
                             <span>{tag}</span>
                           </React.Fragment>
                         ))}
@@ -226,8 +255,8 @@ export default function SelectedWorks() {
           <div className="w-full relative h-[1px] flex justify-center">
             <DashedHorizontalLine />
             <div className="w-full max-w-[1440px] relative">
-              <div className="absolute top-[-5px] left-[5.55556%] -translate-x-1/2 w-[10px] h-[10px] bg-[#191818] border border-[#151414] pointer-events-none z-20" />
-              <div className="absolute top-[-5px] right-[5.55556%] translate-x-1/2 w-[10px] h-[10px] bg-[#191818] border border-[#151414] pointer-events-none z-20" />
+              <div className="hidden md:block absolute top-[-5px] left-[5.55556%] -translate-x-1/2 w-[10px] h-[10px] bg-[#191818] border border-[#151414] pointer-events-none z-20" />
+              <div className="hidden md:block absolute top-[-5px] right-[5.55556%] translate-x-1/2 w-[10px] h-[10px] bg-[#191818] border border-[#151414] pointer-events-none z-20" />
             </div>
           </div>
         </div>

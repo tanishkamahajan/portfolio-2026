@@ -44,8 +44,117 @@ export default function Footer() {
 
   return (
     <footer id="connect" className="w-full bg-[#191818] text-white relative z-30 flex justify-center selection:bg-[#afcc0f] selection:text-black overflow-hidden">
-      {/* 1440px Centered Figma Frame Container (Node 588:34) with Tablet Proportional Scaling Wrapper */}
-      <div className="footer-unit w-full max-w-[1440px] h-[526px] bg-[#191818] relative shrink-0 mx-auto select-none overflow-hidden">
+      
+      {/* ---------------- MOBILE FOOTER COMPOSITION (< 768px) ---------------- */}
+      <div className="block md:hidden w-full max-w-[430px] px-4 pt-8 pb-0 relative flex flex-col items-center gap-6 select-none overflow-hidden mx-auto">
+        
+        {/* Continuous Vertical Guide Threads for Footer */}
+        <div className="w-full absolute inset-0 pointer-events-none z-10">
+          <div className="absolute left-[8px] sm:left-[10px] md:left-[5.55556%] top-0 bottom-0 w-[1px] pointer-events-none opacity-40 md:opacity-100">
+            <svg className="w-[1px] h-full" preserveAspectRatio="none">
+              <line x1="0.5" y1="0" x2="0.5" y2="100%" stroke="#ffffff" strokeWidth="0.5" strokeDasharray="5 5" />
+            </svg>
+          </div>
+          <div className="absolute right-[8px] sm:right-[10px] md:right-[5.55556%] top-0 bottom-0 w-[1px] pointer-events-none opacity-40 md:opacity-100">
+            <svg className="w-[1px] h-full" preserveAspectRatio="none">
+              <line x1="0.5" y1="0" x2="0.5" y2="100%" stroke="#ffffff" strokeWidth="0.5" strokeDasharray="5 5" />
+            </svg>
+          </div>
+        </div>
+
+        {/* 1. Center Avatar & Email Button Group */}
+        <div className="flex flex-col items-center relative z-20 w-full pt-2">
+          {/* Email Button */}
+          <button 
+            onClick={handleCopyEmail}
+            className={`cursor-pointer flex flex-col gap-1 items-center mb-1 relative shrink-0 w-[106px] group transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95 ${
+              copied ? 'text-[#D7F917]' : 'text-[#d8d1d1] hover:text-[#D7F917]'
+            }`}
+          >
+            <div className="h-[36px] relative shrink-0 w-full">
+              <div className="absolute inset-[-4.49%_-1.67%_-4.48%_-1.67%] pointer-events-none">
+                <EmailSvg className="block w-full h-full object-contain" />
+              </div>
+              <p className="absolute left-[46px] top-[3px] -translate-x-1/2 font-gochi text-white text-[22px] leading-none text-center whitespace-nowrap">
+                {copied ? 'copied!' : 'email'}
+              </p>
+            </div>
+            <p className="font-gochi text-[12.5px] leading-none text-center text-white relative shrink-0 w-full whitespace-nowrap">
+              tap to copy
+            </p>
+          </button>
+
+          {/* Avatar Illustration */}
+          <div className="w-[155px] h-[105px] relative mt-1 rotate-[6.56deg]">
+            <img 
+              src="/assets/footer-avatar.png" 
+              alt="Avatar" 
+              className="w-full h-full object-contain pointer-events-none" 
+            />
+          </div>
+        </div>
+
+        {/* 2. Social Buttons Row (Resume, Behance, LinkedIn) */}
+        <div className="flex items-center justify-center gap-2.5 sm:gap-3 relative z-20 flex-wrap">
+          {/* Resume */}
+          <a 
+            href="https://drive.google.com/file/d/18WuJyJ21VY9MD36NreLYU_8sNyUku3E-/view?usp=sharing" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="h-[36px] w-[94px] sm:w-[98px] relative shrink-0 block cursor-pointer group text-[#d8d1d1] hover:text-[#D7F917] transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95"
+          >
+            <div className="absolute inset-[-3.16%_-0.97%_-2.47%_-0.93%] pointer-events-none">
+              <ResumeSvg className="block w-full h-full object-contain" />
+            </div>
+            <p className="absolute left-[48px] top-[6px] -translate-x-1/2 font-gochi text-white text-[19px] leading-none text-center whitespace-nowrap">
+              resume
+            </p>
+          </a>
+
+          {/* Behance */}
+          <a 
+            href="https://www.behance.net/tanishkamahajan" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="h-[36px] w-[98px] sm:w-[102px] relative shrink-0 block cursor-pointer group text-[#d8d1d1] hover:text-[#D7F917] transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95"
+          >
+            <div className="rotate-[3.54deg] w-full h-full relative">
+              <div className="absolute inset-[-2.56%_-0.95%] pointer-events-none">
+                <BehanceSvg className="block w-full h-full object-contain" />
+              </div>
+              <p className="absolute left-[50px] top-[5.5px] -translate-x-1/2 font-gochi text-white text-[19px] leading-none text-center whitespace-nowrap">
+                behance
+              </p>
+            </div>
+          </a>
+
+          {/* LinkedIn */}
+          <a 
+            href="https://www.linkedin.com/in/tanishka-mahajan-4b7b94395/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="h-[36px] w-[96px] sm:w-[100px] relative shrink-0 block cursor-pointer group text-[#d8d1d1] hover:text-[#D7F917] transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95"
+          >
+            <div className="rotate-[-4.53deg] w-full h-full relative">
+              <div className="absolute inset-[-2.56%_-0.95%] pointer-events-none">
+                <LinkedinSvg className="block w-full h-full object-contain" />
+              </div>
+              <p className="absolute left-[48px] top-[4px] -translate-x-1/2 font-gochi text-white text-[19px] leading-none text-center whitespace-nowrap">
+                linkedin
+              </p>
+            </div>
+          </a>
+        </div>
+
+        {/* 3. Scaled "let's talk" Heading */}
+        <h2 className="font-neue font-bold text-[#636262] text-[clamp(88px,24vw,112px)] tracking-[-3px] sm:tracking-[-4px] leading-[0.85] text-center select-none w-full relative z-10 mt-3 -mb-1 translate-y-1 whitespace-nowrap">
+          let’s talk
+        </h2>
+
+      </div>
+
+      {/* ---------------- DESKTOP FOOTER (>= 768px) ---------------- */}
+      <div className="footer-unit hidden md:block w-full max-w-[1440px] h-[526px] bg-[#191818] relative shrink-0 mx-auto select-none overflow-hidden">
         <div className="footer-scaler w-full h-full relative">
         
         {/* Continuous Vertical Guide Threads for Footer (White on Dark Background) */}
@@ -91,15 +200,15 @@ export default function Footer() {
           
           {/* Resume Button (Figma Node 421:46) */}
           <a 
-            href="/resume.pdf" 
+            href="https://drive.google.com/file/d/18WuJyJ21VY9MD36NreLYU_8sNyUku3E-/view?usp=sharing" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="h-[39px] w-[109px] relative shrink-0 block cursor-pointer group text-[#d8d1d1] hover:text-[#D7F917] transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95"
+            className="footer-resume-btn h-[39px] w-[109px] relative shrink-0 block cursor-pointer group text-[#d8d1d1] hover:text-[#D7F917] transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95"
           >
             <div className="absolute inset-[-3.16%_-0.97%_-2.47%_-0.93%] pointer-events-none">
               <ResumeSvg className="block w-full h-full object-contain" />
             </div>
-            <p className="absolute left-[55.56px] top-[6.95px] -translate-x-1/2 font-gochi text-white text-[24px] leading-none text-center whitespace-nowrap">
+            <p className="footer-circle-text absolute left-1/2 top-[6.95px] -translate-x-1/2 font-gochi text-white text-[24px] leading-none text-center whitespace-nowrap">
               resume
             </p>
           </a>
@@ -109,14 +218,14 @@ export default function Footer() {
             href="https://www.behance.net/tanishkamahajan" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex h-[50.2px] w-full items-center justify-center relative shrink-0 cursor-pointer group text-[#d8d1d1] hover:text-[#D7F917] transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95"
+            className="footer-behance-btn flex h-[50.2px] w-full items-center justify-center relative shrink-0 cursor-pointer group text-[#d8d1d1] hover:text-[#D7F917] transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95"
           >
             <div className="flex-none rotate-[3.54deg] w-full">
-              <div className="h-[42.53px] relative w-full">
+              <div className="footer-behance-inner h-[42.53px] relative w-full">
                 <div className="absolute inset-[-2.56%_-0.95%] pointer-events-none">
                   <BehanceSvg className="block w-full h-full object-contain" />
                 </div>
-                <p className="absolute left-[59.44px] top-[6.44px] -translate-x-1/2 font-gochi text-white text-[23.5px] leading-none text-center whitespace-nowrap">
+                <p className="footer-circle-text absolute left-1/2 top-[6.44px] -translate-x-1/2 font-gochi text-white text-[23.5px] leading-none text-center whitespace-nowrap">
                   behance
                 </p>
               </div>
@@ -128,14 +237,14 @@ export default function Footer() {
             href="https://www.linkedin.com/in/tanishka-mahajan-4b7b94395/" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex h-[44.26px] w-[108.51px] items-center justify-center relative shrink-0 cursor-pointer group text-[#d8d1d1] hover:text-[#D7F917] transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95"
+            className="footer-linkedin-btn flex h-[44.26px] w-[108.51px] items-center justify-center relative shrink-0 cursor-pointer group text-[#d8d1d1] hover:text-[#D7F917] transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95"
           >
-            <div className="flex-none rotate-[-4.53deg]">
-              <div className="h-[36px] relative w-[106px]">
+            <div className="footer-linkedin-rotate flex-none rotate-[-4.53deg]">
+              <div className="footer-linkedin-inner h-[36px] relative w-[106px]">
                 <div className="absolute inset-[-2.56%_-0.95%] pointer-events-none">
                   <LinkedinSvg className="block w-full h-full object-contain" />
                 </div>
-                <p className="absolute left-[52px] top-[4px] -translate-x-1/2 font-gochi text-white text-[24px] leading-none text-center whitespace-nowrap">
+                <p className="footer-circle-text absolute left-[52px] top-[4px] -translate-x-1/2 font-gochi text-white text-[24px] leading-none text-center whitespace-nowrap">
                   linkedin
                 </p>
               </div>
@@ -160,53 +269,35 @@ export default function Footer() {
           {/* Email Button (Figma Node 421:47 - Frame 54) */}
           <button 
             onClick={handleCopyEmail}
-            className={`cursor-pointer flex flex-col gap-[10px] items-center mb-[-20px] relative shrink-0 w-[106px] group transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95 ${
+            className={`footer-email-btn cursor-pointer flex flex-col gap-[10px] items-center mb-[-20px] relative shrink-0 w-[106px] group transform transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:scale-95 ${
               copied ? 'text-[#D7F917]' : 'text-[#d8d1d1] hover:text-[#D7F917]'
             }`}
           >
-            <div className="h-[36px] relative shrink-0 w-full">
+            <div className="footer-email-box h-[36px] relative shrink-0 w-full">
               <div className="absolute inset-[-4.49%_-1.67%_-4.48%_-1.67%] pointer-events-none">
                 <EmailSvg className="block w-full h-full object-contain" />
               </div>
-              <p className="absolute left-[46px] top-[3px] -translate-x-1/2 font-gochi text-white text-[24px] leading-none text-center whitespace-nowrap">
+              <p className="footer-circle-text absolute left-1/2 top-[3px] -translate-x-1/2 font-gochi text-white text-[24px] leading-none text-center whitespace-nowrap">
                 {copied ? 'copied!' : 'email'}
               </p>
             </div>
-            <p className="font-gochi text-[14px] leading-none text-center text-white relative shrink-0 w-full whitespace-nowrap">
+            <p className="footer-email-sub font-gochi text-[14px] leading-none text-center text-white relative shrink-0 w-full whitespace-nowrap">
               tap to copy
             </p>
           </button>
 
-          {/* Avatar & Hand-drawn Arrows (Figma Node 588:42 - Group 33) */}
+          {/* Avatar (Figma Node 588:42 - Group 33) */}
           <div className="grid-cols-[max-content] grid-rows-[max-content] inline-grid leading-none place-items-start relative shrink-0">
             
             {/* Avatar Image (Figma Node 421:82 - Image 99) */}
-            <div className="col-1 row-1 flex h-[159.6px] items-center justify-center ml-[77px] mt-[24px] relative w-[219.85px]">
+            <div className="footer-avatar-img-box col-1 row-1 flex h-[159.6px] items-center justify-center ml-[77px] mt-[24px] relative w-[219.85px]">
               <div className="flex-none rotate-[6.56deg]">
-                <div className="h-[137.03px] w-[205.55px] relative">
+                <div className="footer-avatar-img-inner h-[137.03px] w-[205.55px] relative">
                   <img 
                     src="/assets/footer-avatar.png" 
                     alt="Avatar" 
                     className="absolute inset-0 w-full h-full object-cover pointer-events-none" 
                   />
-                </div>
-              </div>
-            </div>
-
-            {/* Right Arrow (Figma Node 421:282 - Vector 38) */}
-            <div className="col-1 row-1 h-[116.21px] w-[76.16px] ml-[278px] mt-0 relative">
-              <div className="absolute inset-[-1.66%_-2.29%_0_-1.16%] pointer-events-none">
-                <img src="/assets/footer-arrow-right.svg" alt="" className="block w-full h-full object-contain" />
-              </div>
-            </div>
-
-            {/* Left Arrow (Figma Node 421:285 - Vector 39) */}
-            <div className="col-1 row-1 flex h-[138.39px] w-[121.96px] items-center justify-center ml-0 mt-[44px] relative">
-              <div className="-scale-y-100 flex-none rotate-[151.87deg]">
-                <div className="h-[116.21px] w-[76.16px] relative">
-                  <div className="absolute inset-[-1.66%_-2.29%_0_-1.16%] pointer-events-none">
-                    <img src="/assets/footer-arrow-left.svg" alt="" className="block w-full h-full object-contain" />
-                  </div>
                 </div>
               </div>
             </div>

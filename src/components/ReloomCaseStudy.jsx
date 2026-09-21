@@ -52,6 +52,13 @@ const reloomItems = [
     alt: 'ReLoom Case Study - 07 Reloom UI Screens',
   },
   {
+    id: '07.5',
+    sectionId: 'solution',
+    type: 'video',
+    src: '/Projects/Sustainable fashion/Reloom prototype.mp4',
+    alt: 'ReLoom Case Study - Prototype Video',
+  },
+  {
     id: '08',
     sectionId: 'value-proposition',
     type: 'image',
@@ -92,12 +99,153 @@ const allNavItems = [
   { id: 'reflection', label: 'Reflection' },
 ];
 
+function ReloomPrototypeVideoPlayer({ src }) {
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [showVideoControls, setShowVideoControls] = useState(false);
+
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        videoRef.current.play();
+        setIsPlaying(true);
+      }
+    }
+  };
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      const cur = videoRef.current.currentTime;
+      const dur = videoRef.current.duration || 1;
+      setCurrentTime(cur);
+      setDuration(dur);
+      setProgress((cur / dur) * 100);
+    }
+  };
+
+  const handleSeek = (e) => {
+    const seekTime = (parseFloat(e.target.value) / 100) * duration;
+    if (videoRef.current) {
+      videoRef.current.currentTime = seekTime;
+      setCurrentTime(seekTime);
+      setProgress(parseFloat(e.target.value));
+    }
+  };
+
+  const formatTime = (timeInSec) => {
+    if (isNaN(timeInSec) || !timeInSec) return '0:00';
+    const mins = Math.floor(timeInSec / 60);
+    const secs = Math.floor(timeInSec % 60);
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  };
+
+  return (
+    <div className="w-full bg-white py-10 md:py-16 px-4 md:px-8 flex justify-center items-center select-none">
+      <div 
+        className="relative w-full max-w-[1150px] group flex flex-col items-center justify-center"
+        onMouseEnter={() => setShowVideoControls(true)}
+        onMouseLeave={() => setShowVideoControls(false)}
+        onTouchStart={() => setShowVideoControls(true)}
+      >
+        <video
+          ref={videoRef}
+          src={src}
+          autoPlay
+          muted
+          loop
+          playsInline
+          onTimeUpdate={handleTimeUpdate}
+          onLoadedMetadata={handleTimeUpdate}
+          onClick={togglePlay}
+          className="w-full max-w-[1150px] max-h-[85vh] h-auto object-contain block mx-auto border-none outline-none cursor-pointer bg-white"
+        />
+
+        {/* Custom Video Player Interface Controls */}
+        <div 
+          className={`absolute bottom-3 left-3 right-3 md:bottom-5 md:left-6 md:right-6 bg-[#191818]/90 backdrop-blur-md text-white rounded-xl p-3 flex items-center gap-3 md:gap-4 transition-all duration-300 z-20 ${
+            showVideoControls || !isPlaying
+              ? 'opacity-100 translate-y-0 pointer-events-auto'
+              : 'opacity-0 translate-y-2 pointer-events-none'
+          }`}
+        >
+          {/* Play / Pause Toggle Button */}
+          <button 
+            onClick={togglePlay}
+            className="p-1.5 text-white hover:text-[#afcc0f] transition-colors focus:outline-none cursor-pointer shrink-0"
+            aria-label={isPlaying ? 'Pause' : 'Play'}
+          >
+            {isPlaying ? (
+              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+              </svg>
+            ) : (
+              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            )}
+          </button>
+
+          {/* Timeline Scrubber Bar */}
+          <div className="flex-1 flex items-center">
+            <input 
+              type="range"
+              min="0"
+              max="100"
+              step="0.1"
+              value={progress || 0}
+              onChange={handleSeek}
+              className="w-full h-1.5 bg-white/30 rounded-lg appearance-none cursor-pointer accent-[#afcc0f] focus:outline-none"
+            />
+          </div>
+
+          {/* Time Display (Current / Duration) */}
+          <span className="font-neue text-xs text-white/80 whitespace-nowrap min-w-[65px] text-right">
+            {formatTime(currentTime)} / {formatTime(duration)}
+          </span>
+
+          {/* Mute / Unmute Toggle Button */}
+          <button 
+            onClick={toggleMute}
+            className="p-1.5 text-white hover:text-[#afcc0f] transition-colors focus:outline-none cursor-pointer shrink-0"
+            aria-label={isMuted ? 'Unmute' : 'Mute'}
+          >
+            {isMuted ? (
+              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73 4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+              </svg>
+            ) : (
+              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+              </svg>
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ReloomCaseStudy() {
   const [activeSection, setActiveSection] = useState('overview');
   const [showBackButton, setShowBackButton] = useState(true);
   const [showSidebar, setShowSidebar] = useState(true);
   const [isSidebarHovered, setIsSidebarHovered] = useState(false);
   const [isNearRightEdge, setIsNearRightEdge] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const itemRefs = useRef({});
   const lastScrollY = useRef(0);
   const scrollStopTimerRef = useRef(null);
@@ -212,9 +360,8 @@ export default function ReloomCaseStudy() {
 
   const handleBack = (e) => {
     e.preventDefault();
-    window.history.pushState({}, '', '/');
+    window.history.pushState({}, '', '/#work');
     window.dispatchEvent(new Event('popstate'));
-    window.scrollTo(0, 0);
   };
 
   return (
@@ -222,7 +369,7 @@ export default function ReloomCaseStudy() {
       
       {/* Context-Aware Floating Top-Left Back Button */}
       <a
-        href="/"
+        href="/#work"
         onClick={handleBack}
         className={`fixed top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 z-50 text-white mix-blend-difference transition-all duration-300 ease-in-out cursor-pointer select-none origin-top-left p-0 m-0 bg-transparent border-none shadow-none scale-85 sm:scale-95 md:scale-100 ${
           showBackButton
@@ -269,11 +416,79 @@ export default function ReloomCaseStudy() {
         </svg>
       </a>
 
-      {/* Sticky Right Viewport Sidebar */}
+      {/* Mobile Floating Bottom Navigation (< md) */}
+      <div className="fixed bottom-5 right-4 z-50 md:hidden select-none flex flex-col items-end">
+        {/* Mobile Dropdown Menu */}
+        {mobileMenuOpen && (
+          <div className="mb-2 w-[180px] p-3 rounded-[18px] bg-[#1d1b1a]/95 backdrop-blur-md border border-white/15 shadow-2xl flex flex-col gap-2.5">
+            <div className="flex items-center justify-between pb-1 border-b border-white/10 text-[11px] font-neue text-[#888888] px-1">
+              <span>SECTIONS</span>
+              <button 
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-white/60 hover:text-white text-[13px] leading-none"
+              >
+                ✕
+              </button>
+            </div>
+            {allNavItems.map((item) => {
+              const isActive = activeSection === item.id;
+              const isAvailable = reloomItems.some((i) => i.sectionId === item.id);
+
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    if (isAvailable) {
+                      scrollToSection(item.id);
+                      setMobileMenuOpen(false);
+                    }
+                  }}
+                  disabled={!isAvailable}
+                  className={`flex items-center justify-between gap-2 w-full text-[12px] font-neue px-1 py-0.5 transition-all duration-200 ${
+                    isActive
+                      ? 'text-white font-bold opacity-100'
+                      : isAvailable
+                      ? 'text-[#888888] active:text-white font-medium opacity-80'
+                      : 'text-white/20 cursor-not-allowed opacity-30'
+                  }`}
+                >
+                  <span className="text-left leading-tight truncate">{item.label}</span>
+                  <span
+                    className={`rounded-full transition-all duration-300 shrink-0 ${
+                      isActive
+                        ? 'w-2 h-2 bg-[#afcc0f] shadow-[0_0_8px_#afcc0f]'
+                        : 'w-1.5 h-1.5 bg-[#555555]'
+                    }`}
+                  />
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Mobile Pill Button */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className={`flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#1d1b1a]/90 backdrop-blur-md border border-white/15 shadow-xl text-white text-[12px] font-neue transition-all duration-300 active:scale-95 ${
+            showBackButton || showSidebar ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'
+          }`}
+          aria-label="Table of Contents"
+        >
+          <span className="w-2 h-2 rounded-full bg-[#afcc0f] shadow-[0_0_6px_#afcc0f] shrink-0" />
+          <span className="capitalize font-medium truncate max-w-[100px]">
+            {allNavItems.find((i) => i.id === activeSection)?.label || 'Sections'}
+          </span>
+          <span className="text-[10px] text-[#888888] ml-0.5">
+            {mobileMenuOpen ? '▼' : '▲'}
+          </span>
+        </button>
+      </div>
+
+      {/* Sticky Right Viewport Sidebar (Desktop >= md) */}
       <nav 
         onMouseEnter={() => setIsSidebarHovered(true)}
         onMouseLeave={() => setIsSidebarHovered(false)}
-        className={`fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3 md:gap-3.5 w-[170px] p-5 rounded-[22px] bg-[#1d1b1a]/90 backdrop-blur-md border border-white/10 shadow-2xl select-none transition-all duration-500 ease-in-out ${
+        className={`hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3 md:gap-3.5 w-[170px] p-5 rounded-[22px] bg-[#1d1b1a]/90 backdrop-blur-md border border-white/10 shadow-2xl select-none transition-all duration-500 ease-in-out ${
           showSidebar || isSidebarHovered || isNearRightEdge
             ? 'opacity-100 translate-x-0 pointer-events-auto'
             : 'opacity-0 translate-x-3 pointer-events-none'
@@ -318,11 +533,15 @@ export default function ReloomCaseStudy() {
             ref={(el) => (itemRefs.current[item.id] = el)}
             className="w-full p-0 m-0 leading-none"
           >
-            <img 
-              src={item.src} 
-              alt={item.alt} 
-              className="w-full h-auto block m-0 p-0 leading-none align-bottom pointer-events-none select-none"
-            />
+            {item.type === 'video' ? (
+              <ReloomPrototypeVideoPlayer src={item.src} />
+            ) : (
+              <img 
+                src={item.src} 
+                alt={item.alt} 
+                className="w-full h-auto block m-0 p-0 leading-none align-bottom pointer-events-none select-none"
+              />
+            )}
           </div>
         ))}
       </div>
